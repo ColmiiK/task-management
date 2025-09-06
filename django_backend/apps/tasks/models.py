@@ -1,12 +1,13 @@
 from django.db import models
 from apps.users.models import User
 from apps.common.models import Tag
+from apps.common.managers import SoftDeleteModel
 
 STATUS_CHOICES = [("todo", "To Do"), ("in_progress", "In Progress"), ("done", "Done")]
 PRIORITY_CHOICES = [("low", "Low"), ("medium", "Medium"), ("high", "High")]
 
 
-class Task(models.Model):
+class Task(SoftDeleteModel):
     title = models.CharField(max_length=200)
     description = models.TextField()
     status = models.CharField(choices=STATUS_CHOICES)
@@ -27,13 +28,12 @@ class Task(models.Model):
     metadata = models.JSONField(default=dict)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    is_archived = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.title} - {self.status}"
 
 
-class TaskAssigment(models.Model):
+class TaskAssigment(SoftDeleteModel):
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     assigned_by = models.ForeignKey(
@@ -45,7 +45,7 @@ class TaskAssigment(models.Model):
         return f"{self.assigned_by} assigned to {self.task}"
 
 
-class TaskHistory(models.Model):
+class TaskHistory(SoftDeleteModel):
     task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name="history")
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     action = models.CharField(max_length=255)
@@ -57,7 +57,7 @@ class TaskHistory(models.Model):
         return f"{self.user} ({self.action}) on {self.task}"
 
 
-class TaskTemplate(models.Model):
+class TaskTemplate(SoftDeleteModel):
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True)
     default_status = models.CharField(max_length=50, choices=STATUS_CHOICES)

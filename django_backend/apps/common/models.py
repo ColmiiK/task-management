@@ -1,8 +1,9 @@
 from django.db import models
 from apps.users.models import User
+from apps.common.managers import SoftDeleteModel
 
 
-class Comment(models.Model):
+class Comment(SoftDeleteModel):
     task = models.ForeignKey(
         "tasks.Task", on_delete=models.CASCADE, related_name="comments"
     )
@@ -14,7 +15,7 @@ class Comment(models.Model):
         return f"Comment by {self.author} on {self.task}"
 
 
-class Tag(models.Model):
+class Tag(SoftDeleteModel):
     name = models.CharField(max_length=50, unique=True)
     color = models.CharField(max_length=7, default="#000000")
 
@@ -22,7 +23,7 @@ class Tag(models.Model):
         return self.name
 
 
-class Team(models.Model):
+class Team(SoftDeleteModel):
     name = models.CharField(max_length=50, unique=True)
     members = models.ManyToManyField(User, related_name="teams")
     created_by = models.ForeignKey(
