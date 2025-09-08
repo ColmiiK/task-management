@@ -27,7 +27,7 @@ class AuthRegister(View):
 
             if not username or not password:
                 return JsonResponse({"error": "Username and password are required"}, status=400)
-            if password != confirm_password:
+            if password is not confirm_password:
                 return JsonResponse({"error": "Passwords don't match"}, status=400)
             if User.objects.filter(username=username).exists():
                 return JsonResponse({"error": "Username already exists"}, status=400)
