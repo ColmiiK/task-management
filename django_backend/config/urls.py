@@ -17,9 +17,23 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
+from django.http import JsonResponse
+from django.db import connections
+from django.db.utils import OperationalError
+
+
+def health_check(request):
+    try:
+        for conn in connections.all():
+            conn.ensure_connection()
+        return JsonResponse({"status": "healthy"}, status=200)
+    except OperationalError:
+        return JsonResponse({"status": "unhealthy"}, status=503)
+
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("health/", health_check),
     path("api/users/", include("apps.users.urls")),
     path("api/tasks/", include("apps.tasks.urls")),
     path("api/", include("apps.common.urls")),
