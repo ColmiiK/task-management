@@ -9,8 +9,8 @@ To launch the application, run the following commands in your terminal.
 The dependencies are exclusively Docker, as the application itself is handled inside a container.
 
 ```bash
-git clone <repo>
-cd task-management-system
+git clone https://github.com/ColmiiK/task-management.git
+cd task-management
 cp .env.sample .env
 docker-compose up
 ```
