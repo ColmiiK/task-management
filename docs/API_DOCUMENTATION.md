@@ -324,7 +324,9 @@ List all tasks with optional filters and pagination.
 | `page`      | int    | Page number (default: 1)       |
 | `page_size` | int    | Items per page (default: 10)   |
 
-#### Response — 200 OK
+#### Responses
+
+- **200 OK**
 
 ```json
 {
@@ -359,7 +361,9 @@ Create a new task.
 }
 ```
 
-#### Response — 201 Created
+#### Responses
+
+- **201 Created**
 
 ```json
 {
@@ -381,16 +385,35 @@ Create a new task.
 }
 ```
 
-#### Error Responses
+- **400 Bad Request**
 
-- **400 Bad Request** — Missing required fields or invalid JSON.
-- **401 Unauthorized** — Authentication required.
+```json
+{
+  "error": "Invalid JSON"
+}
+```
+
+```json
+{
+  "error": "Missing required fields"
+}
+```
+
+- **401 Unauthorized**
+
+```json
+{
+  "error": "Authentication required"
+}
+```
 
 ### `GET /tasks/<id>/`
 
 Get details of a specific task by ID.
 
-#### Response — 200 OK
+#### Responses
+
+- **200 OK**
 
 ```json
 {
@@ -400,10 +423,21 @@ Get details of a specific task by ID.
 }
 ```
 
-#### Errors
-
 - **401 Unauthorized**
+
+```json
+{
+  "error": "Authentication required"
+}
+```
+
 - **404 Not Found**
+
+```json
+{
+  "error": "Task not found"
+}
+```
 
 ### `PUT /tasks/<id>/`
 
@@ -413,7 +447,7 @@ Fully update a task (all fields expected).
 
 Same as POST `/tasks/` above.
 
-#### Response — 200 OK
+#### Responses
 
 ```json
 {
@@ -423,17 +457,35 @@ Same as POST `/tasks/` above.
 }
 ```
 
-#### Errors
+- **400 Bad Request**
 
-- **400 Bad Request** — Invalid JSON
+```json
+{
+  "error": "Invalid JSON"
+}
+```
+
 - **401 Unauthorized**
+
+```json
+{
+  "error": "Authentication required"
+}
+```
+
 - **404 Not Found**
+
+```json
+{
+  "error": "Task not found"
+}
+```
 
 ### `PATCH /tasks/<id>/`
 
 Partially update a task (only include fields to be changed).
 
-#### Request Body (example)
+#### Request Body
 
 ```json
 {
@@ -442,18 +494,7 @@ Partially update a task (only include fields to be changed).
 }
 ```
 
-#### Response — 200 OK
-
-```json
-{
-  "id": 12,
-  "status": "in_progress",
-  "priority": "medium",
-  ...
-}
-```
-
-#### Errors
+#### Responses
 
 Same as `PUT /tasks/<id>/`
 
@@ -461,7 +502,9 @@ Same as `PUT /tasks/<id>/`
 
 Soft-delete (archive) a task.
 
-#### Response — 200 OK
+#### Responses
+
+- **200 OK**
 
 ```json
 {
@@ -469,10 +512,21 @@ Soft-delete (archive) a task.
 }
 ```
 
-#### Errors
-
 - **401 Unauthorized**
+
+```json
+{
+  "error": "Authentication required"
+}
+```
+
 - **404 Not Found**
+
+```json
+{
+  "error": "Task not found"
+}
+```
 
 ### `POST /tasks/<id>/assign/`
 
@@ -486,7 +540,9 @@ Assign users to a task.
 }
 ```
 
-#### Response — 200 OK
+#### Responses
+
+- **200 OK**
 
 ```json
 {
@@ -495,17 +551,37 @@ Assign users to a task.
 }
 ```
 
-#### Errors
+- **400 Bad Request**
 
-- **400 Bad Request** — Invalid JSON
-- **404 Not Found** — Task or User not found
+```json
+{
+  "error": "Invalid JSON"
+}
+```
+
 - **401 Unauthorized**
+
+```json
+{
+  "error": "Authentication required"
+}
+```
+
+- **404 Not Found**
+
+```json
+{
+  "error": "Task not found"
+}
+```
 
 ### `GET /tasks/<id>/comments/`
 
 Get all comments for a task.
 
-#### Response — 200 OK
+#### Responses
+
+- **200 OK**
 
 ```json
 {
@@ -520,10 +596,21 @@ Get all comments for a task.
 }
 ```
 
-#### Errors
-
 - **401 Unauthorized**
+
+```json
+{
+  "error": "Authentication required"
+}
+```
+
 - **404 Not Found**
+
+```json
+{
+  "error": "Task not found"
+}
+```
 
 ### `POST /tasks/<id>/comments/`
 
@@ -537,7 +624,9 @@ Add a comment to a task.
 }
 ```
 
-#### Response — 200 OK
+#### Responses
+
+- **200 OK**
 
 ```json
 {
@@ -550,15 +639,43 @@ Add a comment to a task.
 
 #### Errors
 
-- **400 Bad Request** — Missing content or invalid JSON
+- **400 Bad Request**
+
+```json
+{
+  "error": "Invalid JSON"
+}
+```
+
+```json
+{
+  "error": "Content is required"
+}
+```
+
 - **401 Unauthorized**
+
+```json
+{
+  "error": "Authentication required"
+}
+```
+
 - **404 Not Found**
+
+```json
+{
+  "error": "Task not found"
+}
+```
 
 ### `GET /tasks/<id>/history/`
 
 Retrieve the change history of a task.
 
-#### Response — 200 OK
+#### Responses
+
+- **200 OK**
 
 ```json
 {
@@ -575,7 +692,18 @@ Retrieve the change history of a task.
 }
 ```
 
-#### Errors
-
 - **401 Unauthorized**
+
+```json
+{
+  "error": "Authentication required"
+}
+```
+
 - **404 Not Found**
+
+```json
+{
+  "error": "Task not found"
+}
+```
