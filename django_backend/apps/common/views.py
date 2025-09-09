@@ -11,10 +11,6 @@ def csrf_token(request):
     return JsonResponse({"success": "CSRF cookie set"})
 
 
-# username
-# password
-# confirm_password
-# email
 class AuthRegister(View):
     def post(self, request):
         try:

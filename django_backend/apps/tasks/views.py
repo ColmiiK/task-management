@@ -31,7 +31,7 @@ class TaskListPostView(View):
         if not request.user.is_authenticated:
             return JsonResponse({"error": "Authentication required"}, status=401)
 
-        tasks = Task.object.all()
+        tasks = Task.objects.all()
 
         search = request.GET.get("search")
         priority = request.GET.get("priority")
