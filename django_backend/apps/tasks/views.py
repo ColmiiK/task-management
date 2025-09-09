@@ -1,9 +1,11 @@
 from django.views import View
 from django.http import JsonResponse
 from django.core.paginator import Paginator
-from apps.tasks.models import Task, TaskAssigment, TaskHistory
+from django.db.models import Q
+from apps.tasks.models import Task, TaskAssignment, TaskHistory
 from apps.users.models import User
 from apps.common.models import Comment
+import json
 
 
 def serialize_task(task):

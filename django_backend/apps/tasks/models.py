@@ -17,9 +17,7 @@ class Task(SoftDeleteModel):
     actual_hours = models.DecimalField(null=True, decimal_places=2, max_digits=5)
 
     # Relationships
-    created_by = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name="task_created"
-    )
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name="task_created")
     assigned_to = models.ManyToManyField(User, related_name="task_assigned")
     tags = models.ManyToManyField(Tag)
     parent_task = models.ForeignKey("self", null=True, on_delete=models.CASCADE)
@@ -33,7 +31,7 @@ class Task(SoftDeleteModel):
         return f"{self.title} - {self.status}"
 
 
-class TaskAssigment(SoftDeleteModel):
+class TaskAssignment(SoftDeleteModel):
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     assigned_by = models.ForeignKey(
@@ -62,9 +60,7 @@ class TaskTemplate(SoftDeleteModel):
     description = models.TextField(blank=True)
     default_status = models.CharField(max_length=50, choices=STATUS_CHOICES)
     default_priority = models.CharField(max_length=50, choices=PRIORITY_CHOICES)
-    default_estimated_hours = models.DecimalField(
-        max_digits=5, decimal_places=2, default=1.0
-    )
+    default_estimated_hours = models.DecimalField(max_digits=5, decimal_places=2, default=1.0)
     created_by = models.ForeignKey(
         User, on_delete=models.SET_NULL, null=True, related_name="task_templates"
     )
